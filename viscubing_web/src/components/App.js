@@ -1,7 +1,7 @@
 import { Row, Col, Divider, Spin } from 'antd';
 import './App.css';
 import * as d3 from 'd3';
-import data from '../data/2021_best.csv';
+import index from '../data/index.js';
 import Bar from './Bar';
 import Map from './Map';
 import Line from './Line';
@@ -27,7 +27,7 @@ class App extends Component {
       event_type: '333',
       time_range: [4, 100],
       slider_range: null,
-      dataAll: null,
+      data: null,
       filtered_data: null,
     }
   }
@@ -37,19 +37,23 @@ class App extends Component {
   }
 
   getData() {
-    d3.csv(data).then(table => {
+    const requested_name = this.state.score_type + '_' + this.state.year;
+    const requested_data = index[requested_name];
+    console.log(requested_data);
+
+    d3.csv(requested_data).then(table => {
       table.forEach(d => {
         d.eventId === '333fm' | '333mbf' | '333mbo' ? d.time = +d.time : d.time = +d.time / 100;
       })
       this.setState({
-        dataAll: table,
+        data: table,
       }, this.filterData)}
     );
   }
 
   filterData() {
-    if (this.state.dataAll != null) {
-      const event_data = this.state.dataAll
+    if (this.state.data != null) {
+      const event_data = this.state.data
         .filter(d => d.eventId === this.state.event_type)
       const slider_min = d3.min(event_data, d => d.time);
       const slider_max = d3.max(event_data, d => d.time);
@@ -62,19 +66,19 @@ class App extends Component {
   }
 
   onScoreTypeChange(e) {
-    this.setState({score_type: e.target.value}, this.filterData);
+    this.setState({score_type: e.target.value}, this.getData);
   }
 
   onEventTypeChange(value) {
-    this.setState({event_type: value}, this.filterData);
+    this.setState({event_type: value}, this.getData);
   }
 
   onTimeRangeChange(value) {
-    this.setState({time_range: value}, this.filterData);
+    this.setState({time_range: value}, this.getData);
   }
 
   onYearChange(value) {
-    this.setState({year: value}, this.filterData);
+    this.setState({year: value}, this.getData);
   }
 
   render() {

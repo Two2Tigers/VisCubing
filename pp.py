@@ -2,12 +2,12 @@ import pandas as pd
 import os
 import glob
 
-DATA_DIR = './viscubing_web/data/'
+DATA_DIR = './viscubing_web/src/data/'
 
 
 def export_files(target, clear=False):
     if clear:
-        files = glob.glob(DATA_DIR + 'processed/*')
+        files = glob.glob(DATA_DIR + '*')
         for f in files:
             os.remove(f)
     years = target['year'].unique()
@@ -27,15 +27,15 @@ def export_files(target, clear=False):
             else:
                 to_export.drop(columns=['average', 'personId', 'year'], inplace=True)
                 to_export.rename(columns={'best': 'time'}, inplace=True)
-            to_export.to_csv(DATA_DIR + 'processed/' + years[k] + '_' + m + '.csv', index=False)
+            to_export.to_csv(DATA_DIR + m + '_' + years[k] + '.csv', index=False)
 
             # sort
-            df = pd.read_csv(DATA_DIR + 'processed/' + years[k] + '_' + m + '.csv')
+            df = pd.read_csv(DATA_DIR + m + '_' + years[k] + '.csv')
             df.sort_values(by=['eventId', 'time'],
                         inplace=True, ignore_index=True)
             df.drop(df[df['time'] == 999999].index, inplace=True)
             df.reset_index(drop=True, inplace=True)
-            df.to_csv(DATA_DIR + 'processed/' + years[k] + '_' + m + '.csv')
+            df.to_csv(DATA_DIR + m + '_' + years[k] + '.csv')
 
 
 def export_single(target, clear=False):
@@ -48,7 +48,7 @@ def export_single(target, clear=False):
 
 
 if __name__ == '__main__':
-    big_guy = pd.read_csv(DATA_DIR + 'WCA_export_Results.tsv',
+    big_guy = pd.read_csv('./viscubing_web/data/' + 'WCA_export_Results.tsv',
                         sep='\t',
                         usecols=['competitionId', 'personId', 'personCountryId', 'eventId', 'best', 'average'])
     big_guy['year'] = big_guy.competitionId.str[-4:]
