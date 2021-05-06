@@ -9,10 +9,6 @@ for (let y = 2003; y < 2022; y++) {
 }
 
 class YearSelector extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() { 
     return (
       <Select value={this.props.value} style={{ width: 80 }} onChange={this.props.onChange}>

@@ -2,13 +2,10 @@ import { Slider } from 'antd';
 import React, { Component } from 'react';
 
 class ResultTimeSlider extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
+    const {value, min, max, onChange} = {...this.props} 
     return (
-        <Slider range value={this.props.value} onChange={this.props.onChange} />
+        <Slider range value={value} onChange={onChange} min={min} max={max} />
     );
   }
 }

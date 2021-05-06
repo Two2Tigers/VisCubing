@@ -67,6 +67,7 @@
 
             let num_bin = 2 * d3.thresholdSturges(array);
             const bins = d3.bin().thresholds(num_bin)(array);
+            console.log(num_bin);
 
             const x = d3.scaleLinear()
                 .domain([bins[0].x0, bins[bins.length - 1].x1])
