@@ -11,16 +11,11 @@ for (let y = 2003; y < 2022; y++) {
 class YearSelector extends Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(value) {
-    console.log(`selected ${value}`);
   }
 
   render() { 
     return (
-      <Select defaultValue="2021" style={{ width: 120 }} onChange={this.handleChange}>
+      <Select value={this.props.value} style={{ width: 80 }} onChange={this.props.onChange}>
         {years.map(year => <Option value={year} key={year}>{year}</Option>)}
     </Select>
     );

@@ -6,9 +6,4 @@ import App from './components/App';
 
 const csv_file = './data/data.csv';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App csv_file={csv_file}/>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+ReactDOM.render(<App csv_file={csv_file}/>, document.getElementById('root'));

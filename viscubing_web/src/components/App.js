@@ -16,6 +16,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.getData = this.getData.bind(this);
+    this.onScoreTypeChange = this.onScoreTypeChange.bind(this);
+    this.onEventTypeChange = this.onEventTypeChange.bind(this);
+    this.onTimeRangeChange = this.onTimeRangeChange.bind(this);
+    this.onYearChange = this.onYearChange.bind(this);
+    this.state = {
+      year: 2021,
+      score_type: 'best',
+      event_type: '333',
+      time_range: [0, 20],
+    }
   }
 
   componentDidMount() {
@@ -26,6 +36,22 @@ class App extends Component {
     d3.csv(data).then(table => this.setState({
       dataAll: table,
     }));
+  }
+
+  onScoreTypeChange(e) {
+    this.setState({score_type: e.target.value});
+  }
+
+  onEventTypeChange(value) {
+    this.setState({event_type: value});
+  }
+
+  onTimeRangeChange(value) {
+    this.setState({time_range: value});
+  }
+
+  onYearChange(value) {
+    this.setState({year: value});
   }
 
   render() { 
@@ -39,25 +65,25 @@ class App extends Component {
             <h4>Time Range</h4>
           </Col>
           <Col span={4}>
-            <ResultTimeSlider />
+            <ResultTimeSlider value={this.state.time_range} onChange={this.onTimeRangeChange} />
           </Col>
           <Col span={2}>
             <h4>Game Type</h4>
           </Col>
           <Col span={2}>
-            <TypeSelector />
+            <TypeSelector value={this.state.event_type} onChange={this.onEventTypeChange} />
           </Col>
           <Col span={1}>
             <h4>Year</h4>
           </Col>
           <Col span={2}>
-            <YearSelector />
+            <YearSelector value={this.state.year} onChange={this.onYearChange} />
           </Col>
           <Col span={2}>
             <h4>Score Type</h4>
           </Col>
           <Col span={3}>
-            <ABRadio />
+            <ABRadio value={this.state.score_type} onChange={this.onScoreTypeChange} />
           </Col>
         </Row>
         <Divider />

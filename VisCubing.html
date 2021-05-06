@@ -123,7 +123,7 @@
             const [selectedStation, setSelectedStation] = React.useState(null);
             const [event, setEvent] = React.useState('222');
 
-            const dataAll = useData('./data/processed/2021_best.csv');
+            const dataAll = useData('./viscubing_web/src/data/2021_best.csv');
             const map = useMap(mapUrl);
             const EVENT = ['222', '333', '333bf', '333fm', '333ft', '333mbf', '333mbo', '333oh', '444', '444bf', '555', '555bf', '666', '777', 'clock', 'magic', 'minx', 'mmagic', 'pyram', 'skewb', 'sq1']
             if (!map || !dataAll) {

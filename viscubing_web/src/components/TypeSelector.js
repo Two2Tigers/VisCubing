@@ -8,16 +8,11 @@ const events = ['222', '333', '333bf', '333fm', '333ft', '333mbf', '333mbo', '33
 class TypeSelector extends Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(value) {
-    console.log(`selected ${value}`);
   }
 
   render() { 
     return (
-      <Select defaultValue="333" style={{ width: 120 }} onChange={this.handleChange}>
+      <Select value={this.props.value} style={{ width: 80 }} onChange={this.props.onChange}>
         {events.map(event => <Option value={event} key={event}>{event}</Option>)}
     </Select>
     );
