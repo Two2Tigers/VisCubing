@@ -1,4 +1,3 @@
-import './Bar.css';
 import * as d3 from "d3";
 import React, { Component } from 'react';
 import {Axis, axisPropsFromTickScale, LEFT, BOTTOM} from 'react-d3-axis';
@@ -10,28 +9,14 @@ const height = 400,
 class Barchart extends Component {
   constructor(props) {
     super(props);
-    this.getNumBin = this.getNumBin.bind(this);
-    this.getBins = this.getBins.bind(this);
     this.getXScale = this.getXScale.bind(this);
     this.getYScale = this.getYScale.bind(this);
     this.getXAxis = this.getXAxis.bind(this);
-    this.getYTicks = this.getYTicks.bind(this);
-  }
-
-  getNumBin() {
-    const array = this.props.data.map(d => d.time);
-    return 2 * d3.thresholdSturges(array);
-  }
-
-  getBins() {
-    const array = this.props.data.map(d => d.time);
-    const num_bin = this.getNumBin();
-    const bins = d3.bin().thresholds(num_bin)(array);
-    return bins;
+    this.getYAxis = this.getYAxis.bind(this);
   }
 
   getXScale() {
-    const bins = this.getBins();
+    const bins = this.props.getBins();
     const x = d3.scaleLinear()
       .domain([bins[0].x0, bins[bins.length - 1].x1])
       .range([0, width]);
@@ -39,7 +24,7 @@ class Barchart extends Component {
   }
 
   getYScale() {
-    const bins = this.getBins();
+    const bins = this.props.getBins();
     const y = d3.scaleLinear()
       .domain([0, d3.max(bins, d => d.length)]).nice()
       .range([height, 0]);
@@ -47,11 +32,11 @@ class Barchart extends Component {
   }
 
   getXAxis() {
-    const num_bin = this.getNumBin();
+    const num_bin = this.props.getNumBin();
     const x = this.getXScale();
 
     return (
-      <g transform={`translate(${padding}, ${height + padding})`}>
+      <g transform={`translate(${padding}, ${10 + height})`}>
         <Axis 
           className="axis-bottom"
           {...axisPropsFromTickScale(x, num_bin)}
@@ -61,11 +46,11 @@ class Barchart extends Component {
     )
   }
 
-  getYTicks() {
+  getYAxis() {
     const y = this.getYScale();
 
     return (
-      <g transform={`translate(${padding}, ${padding})`} >
+      <g transform={`translate(${padding}, ${10})`} >
         <Axis
           className="axis-left"
           {...axisPropsFromTickScale(y, y.ticks().length)}
@@ -76,29 +61,32 @@ class Barchart extends Component {
   }
 
   render() {
-    const bins = this.getBins();
+    const bins = this.props.getBins();
     const x = this.getXScale();
     const y = this.getYScale();
-    const xTicks = this.getXAxis();
-    const yTicks = this.getYTicks();
+    const xAxis = this.getXAxis();
+    const yAxis = this.getYAxis();
 
     return (
-      <svg width={width + 2 * padding} height={height + 2 * padding}>
+      <svg width={width + 2 * padding} height={height + padding}>
         <g>
           {bins.map(d => (
-            <g key={d.x0} >
-              <rect
-                x={x(d.x0)}
-                y={y(d.length)}
-                width={Math.max(0, x(d.x1) - x(d.x0))}
-                height={y(0) - y(d.length)}
-                fill={'#69c0ff'}
-                stroke={'#f0f0f0'}
-                transform={`translate(${padding + 1}, ${padding})`}
-              />
-            </g>))}
-            {xTicks}
-            {yTicks}
+            <rect
+              key={d.x0}
+              id={d.x0}
+              x={x(d.x0)}
+              y={y(d.length)}
+              width={Math.max(0, x(d.x1) - x(d.x0))}
+              height={y(0) - y(d.length)}
+              fill={'#69c0ff'}
+              stroke={'#f0f0f0'}
+              transform={`translate(${padding + 1}, ${10})`}
+              onMouseEnter={this.props.onMouseEnter}
+              onMouseOut={this.props.onMouseOut}
+            />
+          ))}
+          {xAxis}
+          {yAxis}
         </g>
       </svg>
     );
@@ -107,11 +95,17 @@ class Barchart extends Component {
 
 class Bar extends Component {
   render() {
-    const {score_type, year, event_type, time_range, data} = {...this.props};
+    const {data, getBins, getNumBin, onMouseEnter, onMouseOut} = {...this.props};
 
     return (
       <div className="bar">
-        <Barchart year={year} score_type={score_type} event_type={event_type} time_range={time_range} data={data}/>
+        <Barchart
+          data={data}
+          getBins={getBins}
+          getNumBin={getNumBin}
+          onMouseEnter={onMouseEnter}
+          onMouseOut={onMouseOut}
+        />
       </div>
     );
   }

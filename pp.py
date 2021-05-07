@@ -38,15 +38,6 @@ def export_files(target, clear=False):
             df.to_csv(DATA_DIR + m + '_' + years[k] + '.csv')
 
 
-def export_single(target, clear=False):
-    modes = ['average', 'best']
-    if clear:
-        files = glob.glob(DATA_DIR + 'processed/*')
-        for f in files:
-            os.remove(f)
-    target.to_csv(DATA_DIR + 'processed/' + 'data.csv')
-
-
 if __name__ == '__main__':
     big_guy = pd.read_csv('./viscubing_web/data/' + 'WCA_export_Results.tsv',
                         sep='\t',

@@ -1,3 +1,14 @@
+.line-chart {
+    padding-left: 4em;
+}
+
 .line {
-    padding: 0;
+    fill: none;
+    stroke: #40a9ff;
+    stroke-width: 2px;
+}
+
+.tooltip {
+    stroke-width: 1px;
+    stroke: red;
 }
