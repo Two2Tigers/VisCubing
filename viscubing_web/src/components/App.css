@@ -1,0 +1,17 @@
+.app {
+    padding: 1em;
+}
+
+h1 {
+    padding-left: 1em;
+    padding-top: 10px;
+}
+
+h4 {
+    padding-left: 1em;
+    padding-top: 5px;
+}
+
+.header {
+    align-items: center;
+}

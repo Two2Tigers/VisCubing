@@ -1,0 +1,16 @@
+.country {
+    fill: #ffec3d;
+    stroke: #d6d6d6;
+}
+
+.sphere {
+    fill :#69c0ff;
+    stroke-width: 1px;
+    
+}
+
+.shadow {
+    -webkit-filter: drop-shadow( 3px 3px 2px #d6d6d6);
+    filter: drop-shadow( 0 0 1rem #d6d6d6);
+    /* Similar syntax to box-shadow */
+}
