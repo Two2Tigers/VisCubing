@@ -167,13 +167,13 @@ class App extends Component {
             <Col span={2}>
               <h4>Time Range</h4>
             </Col>
-            <Col span={4}>
+            <Col span={3}>
               <ResultTimeSlider value={time_range} onChange={this.onTimeRangeChange} min={slider_range[0]} max={slider_range[1]} />
             </Col>
             <Col span={2}>
               <h4>Game Type</h4>
             </Col>
-            <Col span={2}>
+            <Col span={3}>
               <TypeSelector value={event_type} onChange={this.onEventTypeChange} />
             </Col>
             <Col span={1}>
