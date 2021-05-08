@@ -36,7 +36,6 @@ import best_2009 from "./best_2009.csv";
 import best_2021 from "./best_2021.csv";
 import best_2019 from "./best_2019.csv";
 import best_2018 from "./best_2018.csv";
-import continents_index from "./WCA_export_Continents.tsv"
 import countries_index from "./WCA_export_Countries.tsv"
 import bests from "./bests.csv";
 const index = {

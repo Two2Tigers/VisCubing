@@ -27,8 +27,8 @@ const scale = d3.scaleQuantize()
 
 const color_legend = legend.legendColor()
   .labelFormat(d3.format(".2f"))
-  .title("% in Countries")
-  .titleWidth(100)
+  .title("% of competitors")
+  .titleWidth(130)
   .scale(scale);
 
 

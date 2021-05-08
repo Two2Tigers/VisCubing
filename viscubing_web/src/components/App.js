@@ -1,4 +1,4 @@
-import { Row, Col, Divider, Spin } from 'antd';
+import { Row, Col, Divider, Spin, Popover } from 'antd';
 import './App.css';
 import * as d3 from 'd3';
 import index from '../data/index.js';
@@ -11,6 +11,7 @@ import YearSelector from './YearSelector';
 import TypeSelector from './TypeSelector';
 import ABRadio from './Radio';
 import { Component } from 'react';
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 let countries = null,
     bests_data = null;
@@ -182,7 +183,10 @@ class App extends Component {
               <YearSelector value={year} onChange={this.onYearChange} />
             </Col>
             <Col span={2}>
-              <h4>Score Type</h4>
+              <Popover content="Normally, most events have 5 tries per round. Best scores is the minimum time, whileas average score is the average of the five." className="label">
+                <QuestionCircleOutlined />
+              </Popover>
+              <h4 className="label" style={{paddingLeft: "5px"}}>Score Type</h4>
             </Col>
             <Col span={3}>
               <ABRadio value={score_type} onChange={this.onScoreTypeChange} />

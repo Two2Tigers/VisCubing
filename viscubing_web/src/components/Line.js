@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import {Axis, axisPropsFromTickScale, LEFT, BOTTOM} from 'react-d3-axis';
 
 const width = 1200;
-const height = 160;
-const padding = 40;
+const height = 180;
+const padding = 55;
 
 class Line extends Component {
   constructor(props) {
@@ -115,9 +115,9 @@ class Line extends Component {
 
     return (
       <div className="line-chart">
-        <svg width={width + 2 * padding} height={height + padding + 10} onMouseMove={this.showTip} onMouseOut={this.hideTip}>
+        <svg width={width + 2 * padding} height={height + padding + 10} onMouseMove={this.showTip} onMouseOut={this.hideTip} style={{position: "relative", top: "-40"}}>
           <path 
-            transform={`translate(${padding}, ${10})`}
+            transform={`translate(${padding + 10}, ${10})`}
             datum={data}
             d={line}
             className="line"
@@ -125,6 +125,8 @@ class Line extends Component {
           {tip}
           {xAxis}
           {yAxis}
+          <text x={width / 2 + 60} y={height + 45} className="axis-label">Year</text>
+          <text x="0" y="0" transform="rotate(-90) translate(-140, 10)" className="axis-label">Best Completion Time</text>
         </svg>
       </div>
     );

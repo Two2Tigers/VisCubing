@@ -4,7 +4,7 @@ import {Axis, axisPropsFromTickScale, LEFT, BOTTOM} from 'react-d3-axis';
 
 const height = 400,
       width = 400,
-      padding = 30;
+      padding = 50;
 
 class Barchart extends Component {
   constructor(props) {
@@ -68,7 +68,7 @@ class Barchart extends Component {
     const yAxis = this.getYAxis();
 
     return (
-      <svg width={width + 2 * padding} height={height + padding}>
+      <svg width={width + 2 * padding} height={height + padding + 20}>
         <g>
           {bins.map(d => (
             <rect
@@ -87,6 +87,8 @@ class Barchart extends Component {
           ))}
           {xAxis}
           {yAxis}
+          <text x={width / 2} y={height + 45} className="axis-label">Complete Time (s)</text>
+          <text x="0" y="0" transform="rotate(-90) translate(-250, 10)" className="axis-label">Number of Competitors</text>
         </g>
       </svg>
     );
