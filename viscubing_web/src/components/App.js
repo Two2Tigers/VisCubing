@@ -183,7 +183,7 @@ class App extends Component {
               <YearSelector value={year} onChange={this.onYearChange} />
             </Col>
             <Col span={2}>
-              <Popover content="Normally, most events have 5 tries per round. Best scores is the minimum time, whileas average score is the average of the five." className="label">
+              <Popover content="Normally, most events have 5 tries per round. Best scores is the minimum time, whileas average score is the average of the five." className="label" overlayClassName="tip-box">
                 <QuestionCircleOutlined />
               </Popover>
               <h4 className="label" style={{paddingLeft: "5px"}}>Score Type</h4>

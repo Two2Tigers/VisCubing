@@ -12,3 +12,8 @@
     stroke-width: 1px;
     stroke: red;
 }
+
+.tip-label {
+    fill: red;
+    font-size: 11px;
+}

@@ -28,7 +28,7 @@ class Line extends Component {
     const data = this.props.data.map(d => {
       return {
         year: d3.timeParse("%Y")(d.year),
-        score: parseInt(d[score_type]),
+        score: parseInt(d[score_type] / 100),
       }
     })
     return data;
@@ -55,7 +55,7 @@ class Line extends Component {
     const x = this.getXScale();
 
     return (
-      <g transform={`translate(${padding}, ${10 + height})`}>
+      <g transform={`translate(${padding}, ${30 + height})`}>
         <Axis 
           className="axis-bottom"
           {...axisPropsFromTickScale(x, x.ticks().length)}
@@ -69,7 +69,7 @@ class Line extends Component {
     const y = this.getYScale();
 
     return (
-      <g transform={`translate(${padding}, ${10})`} >
+      <g transform={`translate(${padding}, ${30})`} >
         <Axis
           className="axis-left"
           {...axisPropsFromTickScale(y, y.ticks().length)}
@@ -91,7 +91,13 @@ class Line extends Component {
   }
 
   showTip(e) {
-    this.setState({tooltipY: e.nativeEvent.layerY});
+    const event = e.nativeEvent;
+
+    if (event.layerY > 30 && event.layerY < 30 + height) {
+      this.setState({tooltipY: event.layerY});
+    } else {
+      this.hideTip();
+    }
   }
 
   hideTip() {
@@ -99,8 +105,13 @@ class Line extends Component {
   }
 
   getTip() {
+    const y = this.getYScale();
+
     if (this.state.tooltipY) {
-      return <line x1={0} y1={this.state.tooltipY} x2={width + 2 * padding} y2={this.state.tooltipY} className="tooltip"/>
+      return (<g>
+        <line x1={0} y1={this.state.tooltipY} x2={width + 2 * padding} y2={this.state.tooltipY} className="tooltip"/>
+        <text x={width - 20} y={this.state.tooltipY - 8} className="tip-label">{d3.format(".4f")(y.invert(this.state.tooltipY - 30))}</text>
+      </g>)
     } else {
       return <g></g>
     }
@@ -115,9 +126,9 @@ class Line extends Component {
 
     return (
       <div className="line-chart">
-        <svg width={width + 2 * padding} height={height + padding + 10} onMouseMove={this.showTip} onMouseOut={this.hideTip} style={{position: "relative", top: "-40"}}>
+        <svg width={width + 2 * padding} height={height + padding + 30} onMouseMove={this.showTip} onMouseOut={this.hideTip} style={{position: "relative", top: "-40"}}>
           <path 
-            transform={`translate(${padding + 10}, ${10})`}
+            transform={`translate(${padding + 10}, ${30})`}
             datum={data}
             d={line}
             className="line"
@@ -125,8 +136,8 @@ class Line extends Component {
           {tip}
           {xAxis}
           {yAxis}
-          <text x={width / 2 + 60} y={height + 45} className="axis-label">Year</text>
-          <text x="0" y="0" transform="rotate(-90) translate(-140, 10)" className="axis-label">Best Completion Time</text>
+          <text x={width / 2 + 60} y={height + 60} className="axis-label">Year</text>
+          <text x="0" y="0" transform="rotate(-90) translate(-165, 30)" className="axis-label">Best Completion Time</text>
         </svg>
       </div>
     );
